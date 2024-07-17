@@ -3,68 +3,85 @@ import ReactDOM from 'react-dom/client';
 
 import './index.css'; //import css
 
-const book1 = {
-    author: "J. D. Vance",
-    image:  "https://images-na.ssl-images-amazon.com/images/I/81ytGlIkLoL._AC_UL600_SR600,400_.jpg",
-    title: "Hillbilly Elegy: A Memoir of a Family and Culture in Crisis",
-    id: 1
+import listOfBooks from "./books";
+
+const getBook = (id) => {
+  const book = listOfBooks.find((book) => book.id === id)
+
+  console.log(book)
 }
 
-const book2 = {
-    author: "Rebecca Yarros",
-    image:  "https://images-na.ssl-images-amazon.com/images/I/9101MLPcFTL._AC_UL600_SR600,400_.jpg",
-    title: "Onyx Storm (Deluxe Limited Edition) (The Empyrean, 3)",
-    id: 2
-}
+console.log(typeof(listOfBooks))
 
-const book3 = {
-    author: "Amelia Hepworth",
-    image:  "https://images-na.ssl-images-amazon.com/images/I/81mpSoJzv4L._AC_UL600_SR600,400_.jpg",
-    title: "I Love You to the Moon and Back",
-    id: 3
-}
+const booksArray = Object.values(listOfBooks)
 
-const listOfBooks = [book1, book2, book3]
+console.log(booksArray)
 
-const eachBook = listOfBooks.map((book) => {
+const eachBook = booksArray.map((book) => {
 
-    return <Book {...book} key={book.id}/>
+    return <Book {...book} key={book.id} getBook={getBook}/>
     
 })
 
 const BookList = () => {
+
+  
   return (
     <section className='booklist'>
 
         <EventExample></EventExample>
 
-        {eachBook}
+        {eachBook}  
 
-        <Book title={book1.title} image={book1.image} author={book1.author}>
+        {/* <Book title={listOfBooks.book1.title} image={listOfBooks.book1.image} author={listOfBooks.book1.author} id={listOfBooks.book1.id}>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dolorum qui sequi excepturi voluptatem corporis. Dolore, deleniti beatae quaerat ab excepturi architecto pariatur repellendus. Odio explicabo accusantium velit nesciunt autem.</p>
             <button>Click Here</button>
-        </Book>
+        </Book> */}
 
     </section>
   )
 }
 
-export const EventExample = () => {
+//event handling
+const EventExample = () => {
+
+  const handleInput = (e) => {
+    //console.log(e.target)
+    console.log("Input handled")
+  }
+
+  const handleClick = () => {
+    //alert("Button clicked")
+  }
+
+  const handleFormSubmission = (e) => {
+    e.preventDefault();
+    console.log('form submitted');
+  }
+
   return (
     <section>
-        <form>
+        <form onSubmit={handleFormSubmission}>
+
             <h2>Typical Form</h2>
-            <input type='text' name='example' style={{margin: '1rem 0'}}/>
+
+            <input type='text' name='example' onChange={handleInput} style={{margin: '1rem 0'}}/>
+
+            <button type='submit' onClick={handleClick}>Click Here to Submit</button>
         </form>
+
     </section>
   )
 }
 
 function Book(props) {
-    const {image, title, author, children} = props
+    const {image, title, author, id, children} = props
+    //console.log(props)
+
+    const getABook = () => getBook(id)
   return (
     <article className='book'>
-        <img src={image} alt={title}/>
+        <img src={image} alt={title} onMouseEnter={getABook}/>
         <h2>{title}</h2>
         <h4>{author}</h4>
         {children}
@@ -75,3 +92,4 @@ function Book(props) {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(<BookList/>);
+
