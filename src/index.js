@@ -3,42 +3,39 @@ import ReactDOM from 'react-dom/client';
 
 import './index.css'; //import css
 
-import listOfBooks from "./books";
+//import listOfBooks from "./books";
 
-const getBook = (id) => {
-  const book = listOfBooks.find((book) => book.id === id)
+import { eachBook } from "./Book";
 
-  console.log(book)
-}
+//console.log(typeof(listOfBooks))
 
-console.log(typeof(listOfBooks))
+//const booksArray = Object.values(listOfBooks)
 
-const booksArray = Object.values(listOfBooks)
+//console.log(booksArray)
 
-console.log(booksArray)
 
-const eachBook = booksArray.map((book) => {
-
-    return <Book {...book} key={book.id} getBook={getBook}/>
-    
-})
 
 const BookList = () => {
 
   
   return (
-    <section className='booklist'>
+    <React.Fragment>
+      <h1>Best Seller Books</h1>
+      
+      <section className='booklist'>
 
         <EventExample></EventExample>
 
         {eachBook}  
 
         {/* <Book title={listOfBooks.book1.title} image={listOfBooks.book1.image} author={listOfBooks.book1.author} id={listOfBooks.book1.id}>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dolorum qui sequi excepturi voluptatem corporis. Dolore, deleniti beatae quaerat ab excepturi architecto pariatur repellendus. Odio explicabo accusantium velit nesciunt autem.</p>
-            <button>Click Here</button>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi dolorum qui sequi excepturi voluptatem corporis. Dolore, deleniti beatae quaerat ab excepturi architecto pariatur repellendus. Odio explicabo accusantium velit nesciunt autem.</p>
+          <button>Click Here</button>
         </Book> */}
 
-    </section>
+      </section>
+    </React.Fragment>
+    
   )
 }
 
@@ -74,20 +71,7 @@ const EventExample = () => {
   )
 }
 
-function Book(props) {
-    const {image, title, author, id, children} = props
-    //console.log(props)
 
-    const getABook = () => getBook(id)
-  return (
-    <article className='book'>
-        <img src={image} alt={title} onMouseEnter={getABook}/>
-        <h2>{title}</h2>
-        <h4>{author}</h4>
-        {children}
-    </article>
-  )
-}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
